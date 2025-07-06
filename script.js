@@ -45,7 +45,8 @@ chatForm.addEventListener("submit", async (e) => {
   chatWindow.scrollTop = chatWindow.scrollHeight;
 
   // Set your Cloudflare Worker URL here
-  const workerUrl = "https://your-actual-worker-id.workers.dev"; // <-- Replace with your Worker URL
+  const workerUrl = "https://your-worker-id.workers.dev"; // Make sure this matches your deployed Worker URL
+
   if (!workerUrl || workerUrl.includes("YOUR-CLOUDFLARE-WORKER-URL")) {
     // Remove loading message
     chatWindow.removeChild(loadingMsg);
@@ -65,13 +66,29 @@ chatForm.addEventListener("submit", async (e) => {
     });
 
     if (!response.ok) {
-      throw new Error("Network response was not ok");
+      // Try to get error message from response
+      let errorMsg = "Network response was not ok";
+      try {
+        const errorData = await response.json();
+        if (errorData && errorData.error) {
+          errorMsg = errorData.error;
+        }
+      } catch {}
+      throw new Error(errorMsg);
     }
 
     const data = await response.json();
 
     // Remove loading message
     chatWindow.removeChild(loadingMsg);
+
+    // Handle errors from the Worker or OpenAI
+    if (data.error) {
+      addMessage("Sorry, there was a problem with the AI: " + data.error, "ai");
+      console.error("AI error:", data.error);
+      userInput.value = "";
+      return;
+    }
 
     // Get assistant's reply
     let aiReply = "Sorry, I couldn't get a response. Please try again.";
@@ -92,9 +109,13 @@ chatForm.addEventListener("submit", async (e) => {
     // Remove loading message
     chatWindow.removeChild(loadingMsg);
     addMessage(
-      "Sorry, there was a problem connecting to the AI. Please check your internet connection and Cloudflare Worker setup.",
+      "Sorry, there was a problem connecting to the AI. " +
+        "Please check your internet connection, Cloudflare Worker setup, and browser console for errors. " +
+        "Error: " +
+        err.message,
       "ai"
     );
+    console.error("Fetch error:", err);
   }
 
   userInput.value = "";
