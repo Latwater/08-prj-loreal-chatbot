@@ -8,7 +8,8 @@
 /* —— body + fonts —— */
 body {
   font-family: "Montserrat", Arial, Helvetica, sans-serif;
-  color: #333;
+  color: #222;
+  background: #fff;
   display: flex;
   justify-content: center;
 }
@@ -21,13 +22,23 @@ body {
 /* header */
 .site-header {
   text-align: center;
-  padding-top: 50px;
+  padding-top: 40px;
+  padding-bottom: 10px;
+  background: #fff;
+}
+
+.loreal-logo {
+  width: 180px;
+  margin-bottom: 18px;
 }
 
 .site-title {
-  font-size: 22px;
-  font-weight: 500;
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: #000;
   margin-bottom: 10px;
+  font-family: "Montserrat", Arial, Helvetica, sans-serif;
 }
 
 /* chat window */
@@ -37,27 +48,51 @@ body {
 
 .chat-window {
   height: 360px;
-  border: 1px solid #000;
+  border: 2px solid #000;
   padding: 20px;
   font-size: 18px;
   line-height: 1.5;
   overflow-y: auto;
-  background: #fafafa;
+  background: #faf7f2;
   white-space: pre-line;
+  border-radius: 18px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 /* messages */
 .msg {
-  margin-bottom: 14px;
+  max-width: 75%;
+  padding: 12px 18px;
+  border-radius: 18px;
+  margin-bottom: 8px;
   line-height: 1.5;
+  word-break: break-word;
+  font-size: 17px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.03);
 }
 
 .msg.user {
-  color: #000;
+  align-self: flex-end;
+  background: #000;
+  color: #fff;
+  border-bottom-right-radius: 6px;
+  border-top-right-radius: 18px;
+  border-top-left-radius: 18px;
+  border-bottom-left-radius: 18px;
 }
 
 .msg.ai {
-  color: #666666;
+  align-self: flex-start;
+  background: #fffbe6;
+  color: #222;
+  border-bottom-left-radius: 6px;
+  border-top-right-radius: 18px;
+  border-top-left-radius: 18px;
+  border-bottom-right-radius: 18px;
+  border: 1px solid #e5c77b;
 }
 
 /* input row */
@@ -70,8 +105,11 @@ body {
 .chat-form input {
   flex: 1;
   padding: 12px;
-  border: 1px solid #ccc;
+  border: 1.5px solid #e5c77b;
   font-size: 18px;
+  border-radius: 8px;
+  background: #fff;
+  color: #000;
 }
 
 .chat-form input:focus {
@@ -91,6 +129,7 @@ body {
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  border-radius: 8px;
   transition: background 0.3s;
 }
 
@@ -99,7 +138,8 @@ body {
 }
 
 .chat-form button:hover {
-  background: #666666;
+  background: #e5c77b;
+  color: #000;
 }
 
 .chat-form button:focus {
@@ -139,5 +179,5 @@ body {
 }
 
 .site-footer a:hover {
-  color: #666666;
+  color: #e5c77b;
 }
